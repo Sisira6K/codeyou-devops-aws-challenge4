@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+    depends_on:
+      db:
+        condition: service_started
+  
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD : supersecret
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: postgresuser
+      MYSQL_PASSWORD: notsosecretpassword
+
+
+networks:
+  default:
+    driver: bridge 
